@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: database
+    restart: always
+    environment:
+      - POSTGRES_DB=synthea
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_bin:/usr/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+      - ./synthea.sql:/docker-entrypoint-initdb.d/synthea.sql
+    ports:
+      - 2001:5432
+
+volumes:
+  postgresql_bin:
+    driver: local
+  postgresql_data:
+    driver: local
