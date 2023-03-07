@@ -9,7 +9,7 @@ CREATE TABLE organizations (
   lon NUMERIC,
   phone VARCHAR(50),
   revenue NUMERIC,
-  utilization INTEGER
+  utilization NUMERIC
 );
 
 CREATE TABLE patients (
@@ -36,8 +36,8 @@ CREATE TABLE patients (
   zip VARCHAR(20),
   lat NUMERIC,
   lon NUMERIC,
-  heathcare_express NUMERIC,
-  heathcare_coverage NUMERIC
+  healthcare_expenses NUMERIC,
+  healthcare_coverage NUMERIC
 );
 
 CREATE TABLE payers (
@@ -51,17 +51,17 @@ CREATE TABLE payers (
   amount_covered NUMERIC,
   amount_uncovered NUMERIC,
   revenue NUMERIC,
-  covered_encounters INTEGER,
-  uncovered_encounters INTEGER,
-  covered_medications INTEGER,
-  uncovered_medications INTEGER,
-  covered_procedures INTEGER,
-  uncovered_procedures INTEGER,
-  covered_immunizations INTEGER,
-  uncovered_immunizations INTEGER,
-  unique_customers INTEGER,
+  covered_encounters NUMERIC,
+  uncovered_encounters NUMERIC,
+  covered_medications NUMERIC,
+  uncovered_medications NUMERIC,
+  covered_procedures NUMERIC,
+  uncovered_procedures NUMERIC,
+  covered_immunizations NUMERIC,
+  uncovered_immunizations NUMERIC,
+  unique_customers NUMERIC,
   qols_avg NUMERIC,
-  member_months INTEGER
+  member_months NUMERIC
 );
 
 CREATE TABLE providers (
@@ -76,7 +76,7 @@ CREATE TABLE providers (
   zip VARCHAR(20),
   lat NUMERIC,
   lon NUMERIC,
-  utilization INTEGER,
+  utilization NUMERIC,
   FOREIGN KEY (organization) REFERENCES organizations (id)
 );
 
@@ -89,13 +89,13 @@ CREATE TABLE encounters (
   provider VARCHAR(50),
   payer VARCHAR(50),
   encounterclass VARCHAR(30),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(150),
   base_encounter_cost NUMERIC,
   total_claim_cost NUMERIC,
   payer_coverage NUMERIC,
-  reasoncode NUMERIC,
-  reasondescription VARCHAR(150),
+  reason_code VARCHAR(20),
+  reason_description VARCHAR(150),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (organization) REFERENCES organizations (id),
   FOREIGN KEY (provider) REFERENCES providers (id),
@@ -107,7 +107,7 @@ CREATE TABLE allergies (
   stop TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(150),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
@@ -119,10 +119,10 @@ CREATE TABLE careplans (
   stop TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(150),
-  reasoncode NUMERIC,
-  reasondescription VARCHAR(150),
+  reason_code VARCHAR(20),
+  reason_description VARCHAR(150),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
 );
@@ -132,7 +132,7 @@ CREATE TABLE conditions (
   stop TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(200),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
@@ -143,7 +143,7 @@ CREATE TABLE devices (
   stop TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(150),
   udi VARCHAR(250),
   FOREIGN KEY (patient) REFERENCES patients (id),
@@ -155,9 +155,9 @@ CREATE TABLE imaging_studies (
   date TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  bodysite_code INTEGER,
+  bodysite_code VARCHAR(20),
   bodysite_description VARCHAR(150),
-  modality_code VARCHAR(10),
+  modality_code VARCHAR(20),
   modality_description VARCHAR(100),
   sop_code VARCHAR(50),
   sop_description VARCHAR(150),
@@ -169,7 +169,7 @@ CREATE TABLE immunizations (
   date TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(150),
   base_cost NUMERIC,
   FOREIGN KEY (patient) REFERENCES patients (id),
@@ -182,14 +182,14 @@ CREATE TABLE medications (
   patient VARCHAR(50),
   payer VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(300),
   base_cost NUMERIC,
   payer_coverage NUMERIC,
-  dispenses INTEGER,
-  totalcost NUMERIC,
-  reasoncode NUMERIC,
-  reasondescription VARCHAR(200),
+  dispenses NUMERIC,
+  total_cost NUMERIC,
+  reason_code VARCHAR(20),
+  reason_description VARCHAR(200),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (payer) REFERENCES payers (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
@@ -199,7 +199,7 @@ CREATE TABLE observations (
   date TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code VARCHAR(10),
+  code VARCHAR(20),
   description VARCHAR(300),
   value VARCHAR (100),
   units VARCHAR(20),
@@ -210,8 +210,8 @@ CREATE TABLE observations (
 
 CREATE TABLE payer_transitions (
   patient VARCHAR(50),
-  start_year INTEGER,
-  end_year INTEGER,
+  start_year NUMERIC,
+  end_year NUMERIC,
   payer VARCHAR(50),
   ownership VARCHAR(20),
   FOREIGN KEY (patient) REFERENCES patients (id),
@@ -222,11 +222,11 @@ CREATE TABLE procedures (
   date TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(300),
   base_cost NUMERIC,
-  reasoncode NUMERIC,
-  reasondescription VARCHAR(200),
+  reason_code VARCHAR(20),
+  reason_description VARCHAR(200),
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
 );
@@ -235,9 +235,9 @@ CREATE TABLE supplies (
   date TIMESTAMP,
   patient VARCHAR(50),
   encounter VARCHAR(50),
-  code INTEGER,
+  code VARCHAR(20),
   description VARCHAR(200),
-  quantity INTEGER,
+  quantity NUMERIC,
   FOREIGN KEY (patient) REFERENCES patients (id),
   FOREIGN KEY (encounter) REFERENCES encounters (id)
 );

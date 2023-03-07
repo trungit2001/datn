@@ -12,9 +12,9 @@ services:
     volumes:
       - postgresql_bin:/usr/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-      - ./synthea.sql:/docker-entrypoint-initdb.d/synthea.sql
+      - ./data/synthea.sql:/docker-entrypoint-initdb.d/synthea.sql
     ports:
-      - 2001:5432
+      - 2023:5432
 
 volumes:
   postgresql_bin:
