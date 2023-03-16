@@ -10,14 +10,41 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - postgresql_bin:/usr/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - db_bin:/usr/lib/postgresql
+      - db_data:/var/lib/postgresql/data
       - ./data/synthea.sql:/docker-entrypoint-initdb.d/synthea.sql
     ports:
       - 2023:5432
+    networks:
+      - mynet
+  
+  omop-cdm:
+    image: postgres:latest
+    container_name: omop_cdm
+    restart: always
+    environment:
+      - POSTGRES_DB=omop_cdm
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - dwh_bin:/usr/lib/postgresql
+      - dwh_data:/var/lib/postgresql/data
+      - ./data/omop_cdm.sql:/docker-entrypoint-initdb.d/omop_cdm.sql
+    ports:
+      - 2024:5432
+    networks:
+      - mynet
+    
+networks:
+  mynet:
+    driver: bridge
 
 volumes:
-  postgresql_bin:
+  db_bin:
     driver: local
-  postgresql_data:
+  db_data:
+    driver: local
+  dwh_bin:
+    driver: local
+  dwh_data:
     driver: local
