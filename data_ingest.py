@@ -27,6 +27,7 @@ def main():
         df.to_sql(
             name=table,
             con=engine,
+            schema='synthea_schema',
             if_exists="append",
             index=False
         )

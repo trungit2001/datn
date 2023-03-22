@@ -199,11 +199,6 @@ poetry.toml
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -217,6 +212,6 @@ poetry.toml
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/pythonvanilla,python,visualstudiocode
-tools/*
-data/covid19/*
+data/*
+!data/.gitkeep
 *.zip

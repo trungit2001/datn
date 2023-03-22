@@ -1,4 +1,4 @@
-DATABASE_URL = "postgresql://postgres:postgres@localhost:2023/synthea"
+DATABASE_URL = "postgresql://postgres:postgres@localhost:2023/thesis"
 BASE_DATA_PATH = "./data/covid19"
 ORDER_TABLES_INSERT = [
     "organizations",
@@ -17,4 +17,10 @@ ORDER_TABLES_INSERT = [
     "payer_transitions",
     "procedures",
     "supplies"
+]
+ORDER_STMT = [
+    "load_vocab",
+    "cdm_primary_keys",
+    "cdm_indices",
+    "cdm_constraints"
 ]
