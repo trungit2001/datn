@@ -12,8 +12,9 @@ services:
     volumes:
       - postgresql_bin:/usr/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts/init/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./data/cdmVocab:/home
+    shm_size: 1g
     ports:
       - 2023:5432
 
