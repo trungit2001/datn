@@ -17,6 +17,30 @@ services:
     shm_size: 1g
     ports:
       - 2023:5432
+    networks:
+      - mynet
+
+  metabase-app:
+    image: metabase/metabase:latest
+    container_name: metabase
+    restart: always
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_NAME=metabase
+      - MB_DB_PORT=5432
+      - MB_DB_USER=postgres
+      - MB_DB_PASS=postgres
+      - MB_DB_HOST=postgres-db
+    depends_on:
+      - postgres-db
+    ports:
+      - 3000:3000
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
 
 volumes:
   postgresql_bin:
